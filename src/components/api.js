@@ -1,5 +1,3 @@
-// api.js
-
 const API_BASE_URL = "https://fakestoreapi.com/products";
 
 // Fetch all products
@@ -71,3 +69,18 @@ export const deleteProduct = async (id) => {
     throw error;
   }
 };
+
+// Fetch all categories
+export const fetchCategories = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/categories`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch categories");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      throw error;
+    }
+  };
+  

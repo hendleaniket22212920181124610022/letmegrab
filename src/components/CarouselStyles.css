@@ -1,0 +1,10 @@
+.carousel-caption {
+    left: 10;
+    right: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 42px;
+    font-family: cursive;
+  }
+  

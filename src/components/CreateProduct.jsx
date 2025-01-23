@@ -5,11 +5,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
-import { fetchProducts, addProduct, updateProduct, deleteProduct } from "./api";
+import { fetchProducts, addProduct, updateProduct, deleteProduct, fetchCategories } from "./api";
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]); 
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState("All");
   const [showModal, setShowModal] = useState(false);
@@ -26,6 +26,7 @@ const ProductTable = () => {
 
   useEffect(() => {
     loadProducts();
+    loadCategories();
   }, []);
 
   const loadProducts = async () => {
@@ -34,6 +35,15 @@ const ProductTable = () => {
       setProducts(data);
     } catch (error) {
       toast.error("Error fetching products");
+    }
+  };
+
+  const loadCategories = async () => {
+    try {
+      const data = await fetchCategories();
+      setCategories(data);
+    } catch (error) {
+      toast.error("Error fetching categories");
     }
   };
 
@@ -124,10 +134,11 @@ const ProductTable = () => {
             onChange={handleFilterChange}
           >
             <option value="All">All Categories</option>
-            <option value="electronics">Electronics</option>
-            <option value="jewelery">Jewelry</option>
-            <option value="men's clothing">Men's Clothing</option>
-            <option value="women's clothing">Women's Clothing</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </option>
+            ))}
           </select>
         </div>
       </div>
